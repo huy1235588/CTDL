@@ -1,6 +1,5 @@
 #include <iostream>
 #include <cstring> // Để sử dụng hàm strncpy_s
-#include <cstdlib> // Để sử dụng hàm system("pause")
 
 using namespace std;
 

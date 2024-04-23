@@ -1,16 +1,11 @@
 #include <iostream>
 #include <time.h>
 #include <map>
-enum EqualFraction
-{
-    EQUAL,
-};
 
 struct fraction
 {
     int numerator;
     int denominator;
-    enum EqualFraction EQUAL;
 };
 typedef struct fraction Fraction;
 
@@ -127,12 +122,20 @@ Fraction *computeQuotient(Fraction *fraction1, Fraction *fraction2)
     return generateFaction(numerator, denominator);
 }
 
-char comparingFraction(Fraction *fraction1, Fraction *fraction2)
+enum CompareFraction
+{
+    NOCOMP,
+    EQUAL,
+    GREATER,
+    LESS,
+};
+typedef enum CompareFraction Comp;
+Comp comparingFraction(Fraction *fraction1, Fraction *fraction2)
 {
     int numerator1 = fraction1->numerator * fraction2->denominator;
     int numerator2 = fraction2->numerator * fraction1->denominator;
 
-    return (numerator1 == numerator2 ? '=' : (numerator1 > numerator2 ? '>' : '<'));
+    return (numerator1 == numerator2 ? EQUAL : (numerator1 > numerator2 ? GREATER: LESS));
 }
 
 int main(int argc, char *argv[])
@@ -140,8 +143,8 @@ int main(int argc, char *argv[])
     srand(time(NULL));
     Fraction *fraction1 = generateFaction(generateRandomNumber(1, 100), generateRandomNumber(1, 100));
     Fraction *fraction2 = generateFaction(generateRandomNumber(1, 100), generateRandomNumber(1, 100));
-    //Fraction *fraction1 = generateFaction(3, 4);
-    //Fraction *fraction2 = generateFaction(3, 4);
+    // Fraction *fraction1 = generateFaction(3, 4);
+    // Fraction *fraction2 = generateFaction(3, 4);
 
     printf("Franction 1: ");
     printFraction(fraction1);
@@ -164,9 +167,18 @@ int main(int argc, char *argv[])
     printf("Quotient: ");
     printFraction(quotient);
     // Compare
-    printf("%d/%d ", fraction1->numerator, fraction1->denominator);
-    printf("%c", comparingFraction(fraction1, fraction2));
-    printf(" %d/%d", fraction2->numerator, fraction2->denominator);
+    printf("Compare: ");
+    if (comparingFraction(fraction1, fraction2) == 1)
+    {
+        printf("Equal");
+    }else if (comparingFraction(fraction1, fraction2) == 2)
+    {
+        printFraction(fraction1);
+    }else
+    {
+        printFraction(fraction2);
+    }
+    
 
     delete fraction1;
     delete fraction2;

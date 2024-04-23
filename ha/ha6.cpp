@@ -1,6 +1,5 @@
 #include <iostream>
 #include <time.h>
-#include <map>
 
 struct fraction
 {
@@ -62,6 +61,24 @@ void printFraction(Fraction *fraction)
 {
 
     fraction = simplifyingFraction(fraction);
+    if (fraction == NULL)
+    {
+        printf("The fraction are undefined!!\n");
+        return;
+    }
+
+    if (fraction->denominator == 1)
+    {
+        printf("%d\n", fraction->numerator);
+    }
+    else
+    {
+        printf("%d/%d \n", fraction->numerator, fraction->denominator);
+    }
+}
+
+void printFractionNotSimple(Fraction *fraction)
+{
     if (fraction == NULL)
     {
         printf("The fraction are undefined!!\n");
@@ -147,9 +164,9 @@ int main(int argc, char *argv[])
     // Fraction *fraction2 = generateFaction(3, 4);
 
     printf("Franction 1: ");
-    printFraction(fraction1);
+    printFractionNotSimple(fraction1);
     printf("Franction 2: ");
-    printFraction(fraction2);
+    printFractionNotSimple(fraction2);
     //  Sum
     Fraction *sum = computeSum(fraction1, fraction2);
     printf("Sum: ");

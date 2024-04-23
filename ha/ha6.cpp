@@ -42,9 +42,9 @@ int greatestCommonDivisor(int a, int b)
     return abs(b);
 }
 
-int isChecked(Fraction *fraction)
+int isChecked(Fraction *fraction1, Fraction *fraction2)
 {
-    if (fraction == NULL)
+    if (fraction1 == NULL || fraction2 == NULL)
     {
         return -1; // fail
     }
@@ -103,7 +103,7 @@ void printFractionNotSimple(Fraction *fraction)
 
 Fraction *computeSum(Fraction *fraction1, Fraction *fraction2)
 {
-    if (fraction1 == NULL || fraction2 == NULL)
+    if (isChecked(fraction1, fraction2))
     {
         return NULL;
     }
@@ -114,7 +114,7 @@ Fraction *computeSum(Fraction *fraction1, Fraction *fraction2)
 
 Fraction *computeDifferent(Fraction *fraction1, Fraction *fraction2)
 {
-    if (fraction1 == NULL || fraction2 == NULL)
+    if (isChecked(fraction1, fraction2))
     {
         return NULL;
     }
@@ -125,7 +125,7 @@ Fraction *computeDifferent(Fraction *fraction1, Fraction *fraction2)
 
 Fraction *computeProduct(Fraction *fraction1, Fraction *fraction2)
 {
-    if (fraction1 == NULL || fraction2 == NULL)
+    if (isChecked(fraction1, fraction2))
     {
         return NULL;
     }
@@ -136,7 +136,7 @@ Fraction *computeProduct(Fraction *fraction1, Fraction *fraction2)
 
 Fraction *computeQuotient(Fraction *fraction1, Fraction *fraction2)
 {
-    if (fraction1 == NULL || fraction2 == NULL)
+    if (isChecked(fraction1, fraction2))
     {
         return NULL;
     }
@@ -155,7 +155,7 @@ enum CompareFraction
 typedef enum CompareFraction Comp;
 Comp comparingFraction(Fraction *fraction1, Fraction *fraction2)
 {
-    if (fraction1 == NULL || fraction2 == NULL)
+    if (isChecked(fraction1, fraction2))
     {
         return NOCOMP;
     }
@@ -169,12 +169,12 @@ Comp comparingFraction(Fraction *fraction1, Fraction *fraction2)
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
-    //Fraction *fraction1 = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
-    //Fraction *fraction2 = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
-    //Fraction *fraction1 = generateFaction(3, -2);
-    //Fraction *fraction2 = generateFaction(7, 4);
-    Fraction *fraction1 = generateFaction(3, 4);
-    Fraction *fraction2 = generateFaction(3, 4);
+    Fraction *fraction1 = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
+    Fraction *fraction2 = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
+    // Fraction *fraction1 = generateFaction(3, -2);
+    // Fraction *fraction2 = generateFaction(7, 4);
+    // Fraction *fraction1 = generateFaction(3, 4);
+    // Fraction *fraction2 = generateFaction(3, 4);
 
     printf("Franction 1: ");
     printFractionNotSimple(fraction1);

@@ -3,7 +3,7 @@
 
 struct fraction
 {
-    int numerator;
+    int numberator;
     int denominator;
 };
 typedef struct fraction Fraction;
@@ -19,8 +19,14 @@ Fraction *generateFaction(int numberator, int denominator)
     {
         return NULL;
     }
+    if (denominator < 0)
+    {
+        numberator *= -1;
+        denominator *= -1;
+    }
+
     Fraction *pFraction = new Fraction;
-    pFraction->numerator = numberator;
+    pFraction->numberator = numberator;
     pFraction->denominator = denominator;
     return pFraction;
 }
@@ -47,14 +53,14 @@ int isChecked(Fraction *fraction)
 
 Fraction *simplifyingFraction(Fraction *fraction)
 {
-    if (isChecked(fraction))
+    if (fraction == NULL)
     {
         return NULL;
     }
-    int gcd = greatestCommonDivisor(fraction->numerator, fraction->denominator);
-    int numerator = fraction->numerator / gcd;
+    int gcd = greatestCommonDivisor(fraction->numberator, fraction->denominator);
+    int numberator = fraction->numberator / gcd;
     int denominator = fraction->denominator / gcd;
-    return generateFaction(numerator, denominator);
+    return generateFaction(numberator, denominator);
 }
 
 void printFraction(Fraction *fraction)
@@ -69,11 +75,11 @@ void printFraction(Fraction *fraction)
 
     if (fraction->denominator == 1)
     {
-        printf("%d\n", fraction->numerator);
+        printf("%d\n", fraction->numberator);
     }
     else
     {
-        printf("%d/%d \n", fraction->numerator, fraction->denominator);
+        printf("%d/%d \n", fraction->numberator, fraction->denominator);
     }
 }
 
@@ -87,56 +93,56 @@ void printFractionNotSimple(Fraction *fraction)
 
     if (fraction->denominator == 1)
     {
-        printf("%d\n", fraction->numerator);
+        printf("%d\n", fraction->numberator);
     }
     else
     {
-        printf("%d/%d \n", fraction->numerator, fraction->denominator);
+        printf("%d/%d \n", fraction->numberator, fraction->denominator);
     }
 }
 
 Fraction *computeSum(Fraction *fraction1, Fraction *fraction2)
 {
-    if (isChecked(fraction1) || isChecked(fraction2))
+    if (fraction1 == NULL || fraction2 == NULL)
     {
         return NULL;
     }
-    int numerator = fraction1->numerator * fraction2->denominator + fraction2->numerator * fraction1->denominator;
+    int numberator = fraction1->numberator * fraction2->denominator + fraction2->numberator * fraction1->denominator;
     int denominator = fraction1->denominator * fraction2->denominator;
-    return generateFaction(numerator, denominator);
+    return generateFaction(numberator, denominator);
 }
 
 Fraction *computeDifferent(Fraction *fraction1, Fraction *fraction2)
 {
-    if (isChecked(fraction1) || isChecked(fraction2))
+    if (fraction1 == NULL || fraction2 == NULL)
     {
         return NULL;
     }
-    int numerator = fraction1->numerator * fraction2->denominator - fraction2->numerator * fraction1->denominator;
+    int numberator = fraction1->numberator * fraction2->denominator - fraction2->numberator * fraction1->denominator;
     int denominator = fraction1->denominator * fraction2->denominator;
-    return generateFaction(numerator, denominator);
+    return generateFaction(numberator, denominator);
 }
 
 Fraction *computeProduct(Fraction *fraction1, Fraction *fraction2)
 {
-    if (isChecked(fraction1) || isChecked(fraction2))
+    if (fraction1 == NULL || fraction2 == NULL)
     {
         return NULL;
     }
-    int numerator = fraction1->numerator * fraction2->numerator;
+    int numberator = fraction1->numberator * fraction2->numberator;
     int denominator = fraction1->denominator * fraction2->denominator;
-    return generateFaction(numerator, denominator);
+    return generateFaction(numberator, denominator);
 }
 
 Fraction *computeQuotient(Fraction *fraction1, Fraction *fraction2)
 {
-    if (isChecked(fraction1) || isChecked(fraction2))
+    if (fraction1 == NULL || fraction2 == NULL)
     {
         return NULL;
     }
-    int numerator = fraction1->numerator * fraction2->denominator;
-    int denominator = fraction1->denominator * fraction2->numerator;
-    return generateFaction(numerator, denominator);
+    int numberator = fraction1->numberator * fraction2->denominator;
+    int denominator = fraction1->denominator * fraction2->numberator;
+    return generateFaction(numberator, denominator);
 }
 
 enum CompareFraction
@@ -149,19 +155,26 @@ enum CompareFraction
 typedef enum CompareFraction Comp;
 Comp comparingFraction(Fraction *fraction1, Fraction *fraction2)
 {
-    int numerator1 = fraction1->numerator * fraction2->denominator;
-    int numerator2 = fraction2->numerator * fraction1->denominator;
+    if (fraction1 == NULL || fraction2 == NULL)
+    {
+        return NOCOMP;
+    }
 
-    return (numerator1 == numerator2 ? EQUAL : (numerator1 > numerator2 ? GREATER: LESS));
+    int numberator1 = fraction1->numberator * fraction2->denominator;
+    int numberator2 = fraction2->numberator * fraction1->denominator;
+
+    return (numberator1 == numberator2 ? EQUAL : (numberator1 > numberator2 ? GREATER : LESS));
 }
 
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
-    Fraction *fraction1 = generateFaction(generateRandomNumber(1, 100), generateRandomNumber(1, 100));
-    Fraction *fraction2 = generateFaction(generateRandomNumber(1, 100), generateRandomNumber(1, 100));
-    // Fraction *fraction1 = generateFaction(3, 4);
-    // Fraction *fraction2 = generateFaction(3, 4);
+    //Fraction *fraction1 = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
+    //Fraction *fraction2 = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
+    //Fraction *fraction1 = generateFaction(3, -2);
+    //Fraction *fraction2 = generateFaction(7, 4);
+    Fraction *fraction1 = generateFaction(3, 4);
+    Fraction *fraction2 = generateFaction(3, 4);
 
     printf("Franction 1: ");
     printFractionNotSimple(fraction1);
@@ -185,17 +198,21 @@ int main(int argc, char *argv[])
     printFraction(quotient);
     // Compare
     printf("Compare: ");
-    if (comparingFraction(fraction1, fraction2) == 1)
+    switch (comparingFraction(fraction1, fraction2))
     {
+    case 0:
+        printf("The fraction are undefined!!\n");
+        break;
+    case 1:
         printf("Equal");
-    }else if (comparingFraction(fraction1, fraction2) == 2)
-    {
+        break;
+    case 2:
         printFraction(fraction1);
-    }else
-    {
+        break;
+    case 3:
         printFraction(fraction2);
+        break;
     }
-    
 
     delete fraction1;
     delete fraction2;

@@ -2,6 +2,7 @@
 #include <time.h>
 
 #define N 4
+typedef long long int ll;
 
 struct fraction
 {
@@ -103,6 +104,20 @@ void printFractionNotSimple(Fraction *fraction)
     }
 }
 
+ll leastCommonMultiple(Fraction *fraction[N])
+{
+    // Initialize result
+    ll ans = fraction[0]->denominator;
+ 
+    // ans contains LCM of arr[0], ..arr[i]
+    // after i'th iteration,
+    for (int i = 1; i < N; i++)
+        ans = (((fraction[i]->denominator * ans)) /
+                (greatestCommonDivisor(fraction[i]->denominator, ans)));
+ 
+    return ans;
+}
+
 Fraction *computeSum(Fraction *fraction[N])
 {
     for (int i = 0; i < N; i++)
@@ -112,26 +127,15 @@ Fraction *computeSum(Fraction *fraction[N])
             return NULL;
         }
     }
-    int *numberatorTemp = new int[N];
+    int lcm = leastCommonMultiple(fraction);
+    int numberatorTemp;
+    int numberator = 0;
+    int denominator = fraction[0]->denominator * lcm;
     for (int i = 0; i < N; i++)
     {
-        numberatorTemp[i] = fraction[i]->numberator;
-        for (int j = 0; j < N; j++)
-        {
-            if (i != j)
-            {
-                numberatorTemp[i] *= fraction[j]->denominator;
-            }
-        }
+        numberatorTemp *= lcm / fraction[i]->denominator;
+        numberator += numberatorTemp;
     }
-    int numberator = numberatorTemp[0];
-    int denominator = fraction[0]->denominator;
-    for (int i = 1; i < N; i++)
-    {
-        numberator += numberatorTemp[i];
-        denominator *= fraction[i]->denominator;
-    }
-    delete[] numberatorTemp;
     return generateFaction(numberator, denominator);
 }
 

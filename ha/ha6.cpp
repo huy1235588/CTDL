@@ -173,8 +173,8 @@ int main(int argc, char *argv[])
     Fraction *fraction2 = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
     // Fraction *fraction1 = generateFaction(3, -2);
     // Fraction *fraction2 = generateFaction(7, 4);
-    // Fraction *fraction1 = generateFaction(3, 4);
-    // Fraction *fraction2 = generateFaction(3, 4);
+    // `Fraction *fraction1 = generateFaction(3, 4);
+    // `Fraction *fraction2 = generateFaction(3, 4);
 
     printf("Franction 1: ");
     printFractionNotSimple(fraction1);

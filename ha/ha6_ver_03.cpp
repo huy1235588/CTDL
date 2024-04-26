@@ -1,4 +1,5 @@
 #include <iostream>
+#include <stdint.h>
 #include <time.h>
 
 #define N 4
@@ -108,13 +109,13 @@ ll leastCommonMultiple(Fraction *fraction[N])
 {
     // Initialize result
     ll ans = fraction[0]->denominator;
- 
+
     // ans contains LCM of arr[0], ..arr[i]
     // after i'th iteration,
     for (int i = 1; i < N; i++)
         ans = (((fraction[i]->denominator * ans)) /
-                (greatestCommonDivisor(fraction[i]->denominator, ans)));
- 
+               (greatestCommonDivisor(fraction[i]->denominator, ans)));
+
     return ans;
 }
 
@@ -128,13 +129,11 @@ Fraction *computeSum(Fraction *fraction[N])
         }
     }
     int lcm = leastCommonMultiple(fraction);
-    int numberatorTemp;
-    int numberator = 0;
-    int denominator = fraction[0]->denominator * lcm;
-    for (int i = 0; i < N; i++)
+    int numberator = lcm / fraction[0]->denominator * fraction[0]->numberator;
+    int denominator = lcm;
+    for (int i = 1; i < N; i++)
     {
-        numberatorTemp *= lcm / fraction[i]->denominator;
-        numberator += numberatorTemp;
+        numberator += lcm / fraction[i]->denominator * fraction[i]->numberator;
     }
     return generateFaction(numberator, denominator);
 }
@@ -148,26 +147,13 @@ Fraction *computeDifferent(Fraction *fraction[N])
             return NULL;
         }
     }
-    int *numberatorTemp = new int[N];
-    for (int i = 0; i < N; i++)
-    {
-        numberatorTemp[i] = fraction[i]->numberator;
-        for (int j = 0; j < N; j++)
-        {
-            if (i != j)
-            {
-                numberatorTemp[i] *= fraction[j]->denominator;
-            }
-        }
-    }
-    int numberator = numberatorTemp[0];
-    int denominator = fraction[0]->denominator;
+    int lcm = leastCommonMultiple(fraction);
+    int numberator = lcm / fraction[0]->denominator * fraction[0]->numberator;
+    int denominator = lcm;
     for (int i = 1; i < N; i++)
     {
-        numberator -= numberatorTemp[i];
-        denominator *= fraction[i]->denominator;
+        numberator -= lcm / fraction[i]->denominator * fraction[i]->numberator;
     }
-    delete[] numberatorTemp;
     return generateFaction(numberator, denominator);
 }
 
@@ -217,56 +203,63 @@ enum CompareFraction
     LESS,
 };
 typedef enum CompareFraction Comp;
-Comp comparingFraction(Fraction *fraction[N])
+int *comparingFraction(Fraction *fraction[N])
 {
     for (int i = 0; i < N; i++)
     {
         if (isChecked(fraction[i]))
         {
-            return NOCOMP;
+            return nullptr;
         }
     }
-    int *numberatorTemp = new int[N];
+    int nullNumber = -1;
+    int *pNullNumber = &nullNumber;
+    int lcm = leastCommonMultiple(fraction);
+    int numberator;
+    int maxNumberator = 0;
+    int maxNumberatorPosition[N];
     for (int i = 0; i < N; i++)
     {
-        numberatorTemp[i] = fraction[i]->numberator;
-        for (int j = 0; j < N; j++)
+        maxNumberatorPosition[i] = -2;
+    }
+    int minNumberator = INT16_MAX;
+    int minNumberatorPosition;
+    for (int i = 0; i < N; i++)
+    {
+        numberator = lcm / fraction[i]->denominator * fraction[i]->numberator;
+        if (numberator >= maxNumberator)
         {
-            if (i != j)
-            {
-                numberatorTemp[i] *= fraction[j]->denominator;
-            }
+            maxNumberator = numberator;
+            maxNumberatorPosition[i] = i;
         }
     }
-    int *numberator = new int[N];
-    for (int i = 0; i < N; i++)
-    {
-        numberator[i] = numberatorTemp[0];
-        for (int j = 0; j < N; j++)
-        {
-            numberator[i] *= numberatorTemp[j];
-        }
-        /* code */
-        //printf("haha: %d\n", numberator[i]);
-    }
-    for (int i = 0; i < N; i++)
-    {
-    }
-    return EQUAL;
+    int *pMaxNumberatorPosition = maxNumberatorPosition;
+    return (maxNumberator == 0 && minNumberator == INT16_MAX ? pNullNumber : pMaxNumberatorPosition);
 }
 
 int main(int argc, char *argv[])
 {
     srand(time(NULL));
     Fraction *fraction[N];
-    for (int i = 0; i < N; i++)
+    /*for (int i = 0; i < N; i++)
     {
         fraction[i] = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
-    }
+    }*/
 
-    /*     fraction[0] = generateFaction(6, 8);
-        fraction[1] = generateFaction(5, 7);
-        fraction[2] = generateFaction(-2, 5); */
+    // fraction[0] = generateFaction(6, 8);
+    // fraction[1] = generateFaction(5, 7);
+    // fraction[2] = generateFaction(-2, 5);
+    // fraction[3] = generateFaction(3, 4);
+
+    // fraction[0] = generateFaction(6, 8);
+    // fraction[1] = generateFaction(6, 8);
+    // fraction[2] = generateFaction(6, 8);
+    // fraction[3] = generateFaction(6, 8);
+
+    fraction[0] = generateFaction(6, 0);
+    fraction[1] = generateFaction(6, 0);
+    fraction[2] = generateFaction(6, 0);
+    fraction[3] = generateFaction(6, 0);
 
     for (int i = 0; i < N; i++)
     {
@@ -292,14 +285,20 @@ int main(int argc, char *argv[])
     printFraction(quotient);
     // Compare
     printf("Compare: ");
-    switch (comparingFraction(fraction))
+    if (*comparingFraction(fraction) == 0)
     {
-    case 0:
-        printf("The fraction are undefined!!\n");
-        break;
-    case 1:
-        printf("Equal");
-        break;
+        printf("Equal \n");
+    }
+    else
+    {
+        for (int i = 0; i < N; i++)
+        {
+            std::cout << *(comparingFraction(fraction) + i) << std::endl;
+            if (*(comparingFraction(fraction) + i) != -2)
+            {
+                printFraction(fraction[i]);
+            }
+        }
     }
 
     for (int i = 0; i < N; i++)
@@ -307,10 +306,10 @@ int main(int argc, char *argv[])
         delete fraction[i];
     }
 
-    /*  delete sum;
-     delete different;
-     delete product;
-     delete quotient; */
+    delete sum;
+    delete different;
+    delete product;
+    delete quotient;
 
     return 0;
 }

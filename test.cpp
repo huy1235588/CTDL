@@ -1,16 +1,27 @@
 #include <iostream>
-
-int greatestCommonDivisor(int a, int b)
+#include <math.h>
+#define ll unsigned long long int
+int main()
 {
-    while (a != 0)
+    for (double pows = 7; pows < 12; pows++)
     {
-        int temp = a;
-        a = b % a;
-        b = temp;
+        int startTime = time(NULL);
+        ll n = (ll)pow(10.0, pows);
+        ll sum = 0;
+        ll sumE = 0;
+        ll i;
+        for (i = 0; i <= n; i++)
+        {
+            if (sum == pow(10.0, 9.0))
+            {
+                sumE += i;
+                continue;
+            }
+            sum += i;
+        }
+        printf("1 + 2 + ... + %llu = %llu\n", n, sum);
+        int elapsedTime = time(NULL) - startTime;
+        printf("Duration: %d seconds\n", elapsedTime);
     }
-    return abs(b);
-}
-
-int main(){
-
+    return 0;
 }

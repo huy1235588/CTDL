@@ -1,26 +1,26 @@
 #include <iostream>
-#include <time.h>
 #include <math.h>
-#include <stdint.h>
+#include <time.h>
+#include <sstream>
+#include <iomanip>
+
 typedef unsigned long long int ll;
+using namespace std;
 int main(int argc, char *argv[])
 {
-    for (int pows = 7; pows < 13; pows++)
+    for (ll Exponent = 7; Exponent <= 12; Exponent++)
     {
         int startTime = time(NULL);
-        ll powss = ((ll)pow(10, pows-1)) * ((ll)pow(10, pows-1)) * 100;
-        ll firstNumber = 4 * powss;
-        ll secondNumber = 9 * (powss / pow(10,1));
-        for (int i = 2; i < pows; i++)
-        {
-            secondNumber += 9 * (powss / pow(10,i));
-        }
-        ll powsss = ((ll) pow(10, pows-1)) * 10;
-        ll thirdNumber = 5 * powsss;
-        ll sum = firstNumber + secondNumber + thirdNumber;
-        printf("\n1 + 2 + ... + 10^%d = %llu\n", pows, sum);
-        int elapsedTime = time(NULL) - startTime;
-        printf("Duration: %d seconds\n", elapsedTime);
+        ll n = pow(10.0, Exponent);
+
+        ll sum = (n * (n + 1)) / 2;
+        printf("1 + 2 + ... + %llu = %llu\n", n, sum);
+        int elapsed = time(NULL) - startTime;
+        printf("Duration: %d seconds\n", elapsed);
     }
+    int startTIme = time(NULL);
+    ll n = pow(10.0, 16.0);
+    ll sum = (n * (n + 1)) / 2;
+    printf("1 + 2 + ... + %llu = %llu\n", n, sum);
     return 0;
 }

@@ -4,33 +4,31 @@ typedef unsigned long long int ll;
 
 int main(int argc, char *argv[])
 {
-    ll firstNumberSum = 0;
-    ll midleNumberSum = 0;
-    ll lastNumberSum = 0;
-    ll temp = 9 * pow(10.0, 9.0);
-    for (double i = 0; i < 9; i++)
+    int startTime = time(NULL);
+    ll nReduce = (ll)pow(10.0, 1.0);
+    ll sum = 0;
+    for (ll i = 0; i <= nReduce; i++)
     {
-         temp += 9 * pow(10.0, i);
+        sum += i;
     }
-    
-    printf("temp: %llu\n", temp);
-    for (double pows = 7; pows < 12; pows++)
+    ll ha = sum;
+    printf("1 + 2 + ... + %llu = %llu\n", nReduce, sum);
+    int elapsed = time(NULL) - startTime;
+    printf("Duration = %d seconds\n", elapsed);
+    for (int exponent = 2; exponent < 12; exponent++)
     {
         int startTime = time(NULL);
-        ll n = (ll)pow(10.0, pows);
-        ll i;
-        for (i = 0; i < n; i++)
+        ll n = (ll)pow(10.0, (double)exponent);
+        for (ll i = nReduce + 1; i <= n; i += (n / 10))
         {
-            lastNumberSum += i;
-            if (lastNumberSum >= temp)
-            {
-                midleNumberSum++;
-                lastNumberSum = lastNumberSum - pow(10.0, 10.0);
-            }
+            ha += pow(10.0, (exponent - 1) * 2);
+            sum += ha;
         }
-        printf("1 + 2 + ... + %llu = %llu %llu\n", n, midleNumberSum, lastNumberSum);
-        int elapsedTime = time(NULL) - startTime;
-        printf("Duration: %d seconds\n", elapsedTime);
+        nReduce = n;
+        ha = sum;
+        printf("1 + 2 + ... + %llu = %llu\n", n, sum);
+        int elapsed = time(NULL) - startTime;
+        printf("Duration = %d seconds\n", elapsed);
     }
 
     return 0;

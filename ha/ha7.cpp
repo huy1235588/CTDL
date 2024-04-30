@@ -7,23 +7,24 @@ typedef enum Status
     TAM_NGHI
 } Status;
 
-typedef struct SinhVien
+struct SinhVien
 {
     char *ho_ten;
     float diem_toan;
     float diem_van;
     float diem_tb;
     Status trang_thai;
-} SinhVien;
+};
+typedef struct SinhVien SinhVien;
 
 // Hàm cấp phát động cho danh sách sinh viên
-SinhVien* capPhatDanhSach(int n) {
-    SinhVien *danh_sach = (SinhVien*)malloc(n * sizeof(SinhVien));
-    if (danh_sach == NULL) {
+SinhVien* generateList() {
+    SinhVien *list = new SinhVien;
+    if (list == NULL) {
         printf("Khong the cap phat bo nho!\n");
         exit(1);
     }
-    return danh_sach;
+    return list;
 }
 
 // Hàm nhập thông tin cho biến cấu trúc SinhVien
@@ -40,7 +41,6 @@ void inputInformation(SinhVien *sv)
     // Cấp phát bộ nhớ động cho chuỗi ký tự
     sv->ho_ten = (char *)malloc(strlen(name) + 1);
     strcpy(sv->ho_ten, name);
-
 
     printf("Nhập điểm toán: ");
     scanf("%f", &sv->diem_toan);
@@ -61,13 +61,12 @@ void printInputInformation(SinhVien *sv)
     printf("Điểm toán: %.2f\n", sv->diem_toan);
     printf("Điểm văn: %.2f\n", sv->diem_van);
     printf("Điểm trung bình: %.2f\n", sv->diem_tb);
-    printf("Trạng thái : %s\n", (sv->trang_thai == 0) ? "Còn học" : "Tạm nghỉ");
+    printf("Trạng thái: %s\n", (sv->trang_thai == 0) ? "Còn học" : "Tạm nghỉ");
 }
 
 int main()
 {
-    SinhVien *sv;
-    sv = (SinhVien *)malloc(sizeof(SinhVien));
+    SinhVien *sv = generateList();
 
     // Nhập thông tin cho biến cấu trúc SinhVien
     inputInformation(&*sv);

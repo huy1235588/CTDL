@@ -9,14 +9,15 @@ typedef enum Status
     TAM_NGHI
 } Status;
 
-typedef struct SinhVien
+struct SinhVien
 {
     char *ho_ten;
     float diem_toan;
     float diem_van;
     float diem_tb;
     Status trang_thai;
-} SinhVien;
+};
+typedef struct SinhVien SinhVien;
 
 // Hàm nhập thông tin cho biến cấu trúc SinhVien
 void inputInformation(SinhVien *sv, int n)
@@ -29,9 +30,7 @@ void inputInformation(SinhVien *sv, int n)
         printf("Nhập họ tên: ");
 
         // Xóa bộ nhớ đệm đầu vào
-        while ((getchar()) != '\n')
-            ;
-
+        while ((getchar()) != '\n');
         fgets(name, sizeof(name), stdin);
 
         // Loại bỏ ký tự '\n' ở cuối chuỗi

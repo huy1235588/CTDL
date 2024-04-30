@@ -54,11 +54,11 @@ void findAndPrint(Phone* phone, int count) {
 
 // Hàm hiển thị menu và lựa chọn của người dùng
 int dislayMenu() {
-    cout << "\n======== MENU ========\n";
+    cout << "\n-------- MENU --------\n";
     cout << "1. Add phone to directory.\n";
     cout << "2. Find and print information of number phone.\n";
     cout << "3. Escape program.\n";
-    cout << "=======================\n";
+    cout << "--------------------===\n";
     cout << "Enter number: ";
 
     int choise;

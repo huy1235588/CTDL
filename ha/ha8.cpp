@@ -30,12 +30,8 @@ void inputInformation(SinhVien *sv, int n)
         printf("Nhập họ tên: ");
 
         // Xóa bộ nhớ đệm đầu vào
-        while ((getchar()) != '\n');
-        fgets(name, sizeof(name), stdin);
-
-        // Loại bỏ ký tự '\n' ở cuối chuỗi
-        name[strcspn(name, "\n")] = '\0';
-
+        cin.ignore();
+        cin.getline(name, 100);
         // Cấp phát bộ nhớ động cho chuỗi ký tự
         sv[i].ho_ten = (char *)malloc(strlen(name) + 1);
         // Sao chép name vào ho_ten
@@ -92,15 +88,20 @@ void printHighestAverageStudent(SinhVien *sv, int n)
 int main()
 {
     int n;
-    printf("Nhập số lượng sinh viên: ");
+    printf("Nhập số lượng sinh viên: \a");
     scanf("%d", &n);
 
     // Cấp phát động cho danh sách sinh viên
-    SinhVien *sv = (SinhVien *)malloc(n * sizeof(SinhVien));
-    if (sv == nullptr)
+    SinhVien *sv{new SinhVien[n]{}};
+    //SinhVien *sv = new SinhVien[n];
+    printf("size: %d\n", sizeof(sv));
+    for (int i = 0; i < n; i++)
     {
-        cout << "Không thể cấp phát bộ nhớ";
-        return 1;
+        if (sv == nullptr)
+        {
+            cout << "Không thể cấp phát bộ nhớ";
+            return 1;
+        }
     }
 
     // Nhập thông tin cho biến cấu trúc SinhVien
@@ -115,6 +116,6 @@ int main()
     {
         free(sv[i].ho_ten);
     }
-    free(sv);
+    delete[] sv;
     return 0;
 }

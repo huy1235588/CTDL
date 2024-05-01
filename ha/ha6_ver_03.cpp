@@ -195,46 +195,46 @@ Fraction *computeQuotient(Fraction *fraction[N])
     return generateFaction(numberator, denominator);
 }
 
-enum CompareFraction
-{
-    NOCOMP,
-    EQUAL,
-    GREATER,
-    LESS,
-};
-typedef enum CompareFraction Comp;
-int *comparingFraction(Fraction *fraction[N])
+void comparingFraction(Fraction *fraction[N])
 {
     for (int i = 0; i < N; i++)
     {
         if (isChecked(fraction[i]))
         {
-            return nullptr;
+            printf("The fraction are undefined!!\n");
+            return;
         }
     }
-    int nullNumber = -1;
-    int *pNullNumber = &nullNumber;
     int lcm = leastCommonMultiple(fraction);
-    int numberator;
-    int maxNumberator = 0;
-    int maxNumberatorPosition[N];
-    for (int i = 0; i < N; i++)
+    int compareNumberator;
+    int maxNumberator = lcm / fraction[0]->denominator * fraction[0]->numberator;
+    int numberator = fraction[0]->numberator;
+    int denominator = fraction[0]->denominator;
+    Fraction *Equal;
+    bool checkEqual = true;
+    for (int i = 1; i < N; i++)
     {
-        maxNumberatorPosition[i] = -2;
-    }
-    int minNumberator = INT16_MAX;
-    int minNumberatorPosition;
-    for (int i = 0; i < N; i++)
-    {
-        numberator = lcm / fraction[i]->denominator * fraction[i]->numberator;
-        if (numberator >= maxNumberator)
+        compareNumberator = lcm / fraction[i]->denominator * fraction[i]->numberator;
+        if (compareNumberator != maxNumberator)
         {
-            maxNumberator = numberator;
-            maxNumberatorPosition[i] = i;
+            checkEqual = false;
+        }
+        if (compareNumberator > maxNumberator)
+        {
+            maxNumberator = compareNumberator;
+            numberator = fraction[i]->numberator;
+            denominator = fraction[i]->denominator;
         }
     }
-    int *pMaxNumberatorPosition = maxNumberatorPosition;
-    return (maxNumberator == 0 && minNumberator == INT16_MAX ? pNullNumber : pMaxNumberatorPosition);
+    if (checkEqual)
+    {
+        printf("Equal\n");
+    }
+    else
+    {
+        Fraction *maxFraction = generateFaction(numberator, denominator);
+        printFractionNotSimple(maxFraction);
+    }
 }
 
 int main(int argc, char *argv[])
@@ -256,10 +256,10 @@ int main(int argc, char *argv[])
     // fraction[2] = generateFaction(6, 8);
     // fraction[3] = generateFaction(6, 8);
 
-    fraction[0] = generateFaction(6, 0);
-    fraction[1] = generateFaction(6, 0);
-    fraction[2] = generateFaction(6, 0);
-    fraction[3] = generateFaction(6, 0);
+    fraction[0] = generateFaction(7, 0);
+    fraction[1] = generateFaction(6, 5);
+    fraction[2] = generateFaction(6, 5);
+    fraction[3] = generateFaction(6, 4);
 
     for (int i = 0; i < N; i++)
     {
@@ -285,21 +285,7 @@ int main(int argc, char *argv[])
     printFraction(quotient);
     // Compare
     printf("Compare: ");
-    if (*comparingFraction(fraction) == 0)
-    {
-        printf("Equal \n");
-    }
-    else
-    {
-        for (int i = 0; i < N; i++)
-        {
-            std::cout << *(comparingFraction(fraction) + i) << std::endl;
-            if (*(comparingFraction(fraction) + i) != -2)
-            {
-                printFraction(fraction[i]);
-            }
-        }
-    }
+    comparingFraction(fraction);
 
     for (int i = 0; i < N; i++)
     {

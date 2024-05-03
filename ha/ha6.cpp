@@ -58,8 +58,13 @@ Fraction *simplifyingFraction(Fraction *fraction)
         return NULL;
     }
     int gcd = greatestCommonDivisor(fraction->numberator, fraction->denominator);
-    int numberator = fraction->numberator / gcd;
-    int denominator = fraction->denominator / gcd;
+    int numberator;
+    int denominator;
+    if (gcd >= 2)
+    {
+        fraction->numberator / gcd;
+        fraction->denominator / gcd;
+    }
     return generateFaction(numberator, denominator);
 }
 

@@ -9,7 +9,7 @@ typedef enum Status
 
 struct SinhVien
 {
-    char *ho_ten;
+    char ho_ten[50];
     float diem_toan;
     float diem_van;
     float diem_tb;
@@ -30,17 +30,8 @@ SinhVien* generateList() {
 // Hàm nhập thông tin cho biến cấu trúc SinhVien
 void inputInformation(SinhVien *sv)
 {
-    char name[100];
-
     printf("Nhập họ tên: ");
-    fgets(name, sizeof(name), stdin);
-
-    // Loại bỏ ký tự '\n' ở cuối chuỗi
-    name[strcspn(name, "\n")] = '\0';
-
-    // Cấp phát bộ nhớ động cho chuỗi ký tự
-    sv->ho_ten = (char *)malloc(strlen(name) + 1);
-    strcpy(sv->ho_ten, name);
+    scanf("%[^\n]s",sv->ho_ten);
 
     printf("Nhập điểm toán: ");
     scanf("%f", &sv->diem_toan);
@@ -74,7 +65,6 @@ int main()
     printInputInformation(&*sv);
 
     // Giải phóng bộ nhớ đã cấp phát
-    free(sv->ho_ten);
-    free(sv);
+    delete(sv);
     return 0;
 }

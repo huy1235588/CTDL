@@ -4,53 +4,85 @@
 using namespace std;
 
 // Khai báo cấu trúc phoneDirectory
-struct Contact
+struct Phone
 {
-    char *hoTen;
-    char *diaChi;
+    char hoTen[50];
+    char diaChi[50];
     int soDienThoai;
-    Contact *next;
-};
-typedef struct Contact Phone;
-// Hàm thêm một mục vào danh bạ
-void inputPhone(Phone *phone)
-{
-    char name[100];
-    printf("Enter full name: ");
-    cin.getline(phone->hoTen, 100);
-
-    cout << "Enter number phone: ";
-    cin >> phone->soDienThoai;
-
-    cout << "Enter address: ";
-    cin.ignore();
-    cin.getline(phone->diaChi, 100);
-    // cout << "Added successfully.\n";
-}
-void addPhone()
-{
-    Phone *phone = new Phone;
-    inputPhone(phone);
-    cout << sizeof(phone->hoTen);
-}
-// Hàm tìm và in thông tin theo số điện thoại
-void findAndPrint(Phone *phone[30], int count)
-{
-    int numberPhone;
-    cout << "Enter the phone number to search: ";
-    cin >> numberPhone;
-
-    bool foundPhone = false;
-    while (/* condition */)
+    Phone *next;
+    Phone()
     {
-        /* code */
+        hoTen = "";
+        diaChi = ;
+        soDienThoai = NULL;
+        next = NULL;
+    }
+};
+typedef struct Phone Phone;
+struct ListPhone
+{
+    Phone *head;
+    Phone *tail;
+    ListPhone()
+    {
+        head = NULL;
+        tail = NULL;
+    }
+    // Hàm thêm một mục vào danh bạ
+    void addPhone()
+    {
+        Phone *newPhone = new Phone;
+        cout << "Enter full name: ";
+        cin.ignore();
+        cin.getline(newPhone->hoTen, 100);
+
+        cout << "Enter number phone: ";
+        cin >> newPhone->soDienThoai;
+
+        cout << "Enter address: ";
+        cin.ignore();
+        cin.getline(newPhone->diaChi, 100);
+        if (head == NULL)
+        {
+            head->next = NULL;
+            head = newPhone;
+        }
+        else
+        {
+            tail->next = newPhone;
+        }
+        tail = newPhone;
+        cout << "Added successfully.\n";
     }
 
-    if (!foundPhone)
+    // Hàm tìm và in thông tin theo số điện thoại
+    void findAndPrint()
     {
+        int numberPhone;
+        cout << "Enter the phone number to search: ";
+        cin >> numberPhone;
+
+        Phone *currentPhone = head;
+        while (currentPhone->soDienThoai == numberPhone)
+        {
+            currentPhone = currentPhone->next;
+        }
+
         cout << "Can't find number phone " << numberPhone << endl;
     }
-}
+    void deleteListPhone()
+    {
+        while (head->next != head)
+        {
+            Phone *currentPhone = head->next;
+            head = currentPhone->next;
+            head->next = currentPhone;
+            delete (currentPhone);
+        }
+        delete (head);
+    }
+};
+typedef struct ListPhone ListPhone;
 
 // Hàm hiển thị menu và lựa chọn của người dùng
 int dislayMenu()
@@ -69,7 +101,7 @@ int dislayMenu()
 
 int main()
 {
-    Phone *phone;        // Danh sách danh bạ
+    ListPhone phone;     // Danh sách danh bạ
     int countNumber = 0; // Số lượng mục trong danh bạ
 
     int choise;
@@ -80,10 +112,10 @@ int main()
         switch (choise)
         {
         case 1:
-            addPhone();
+            phone.addPhone();
             break;
         case 2:
-            //findAndPrint(phone, countNumber);
+            phone.findAndPrint();
             break;
         case 3:
             cout << "The program ends.\n";
@@ -93,9 +125,5 @@ int main()
         }
     } while (choise != 3);
 
-    for (int i = 0; i < countNumber; i++)
-    {
-        delete phone[i];
-    }
     return 0;
 }

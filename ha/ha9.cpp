@@ -12,22 +12,20 @@ struct Phone
     Phone *next;
     Phone()
     {
-        hoTen = "";
-        diaChi = ;
-        soDienThoai = NULL;
+        soDienThoai = 0;
         next = NULL;
     }
 };
 typedef struct Phone Phone;
 struct ListPhone
 {
-    Phone *head;
-    Phone *tail;
-    ListPhone()
-    {
-        head = NULL;
-        tail = NULL;
-    }
+    Phone *head = new Phone;
+    Phone *tail = new Phone;
+    /*     ListPhone()
+        {
+            head = NULL;
+            tail = NULL;
+        } */
     // Hàm thêm một mục vào danh bạ
     void addPhone()
     {
@@ -67,12 +65,18 @@ struct ListPhone
         {
             currentPhone = currentPhone->next;
         }
+        cout << "Full name: " << currentPhone->hoTen;
+        cout << "Number phone: " << currentPhone->soDienThoai;
+        cout << "Address: " << currentPhone->diaChi;
+        return;
 
         cout << "Can't find number phone " << numberPhone << endl;
     }
+
+    // Giải phóng bộ nhớ
     void deleteListPhone()
     {
-        while (head->next != head)
+        while (head->next != NULL)
         {
             Phone *currentPhone = head->next;
             head = currentPhone->next;
@@ -124,6 +128,6 @@ int main()
             cout << "Invalid selection. Please try again.\n";
         }
     } while (choise != 3);
-
+    phone.deleteListPhone();
     return 0;
 }

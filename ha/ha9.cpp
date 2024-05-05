@@ -12,7 +12,6 @@ struct Phone
     Phone *next;
     Phone()
     {
-        soDienThoai = 0;
         next = NULL;
     }
 };
@@ -20,37 +19,46 @@ typedef struct Phone Phone;
 struct ListPhone
 {
     Phone *head = new Phone;
-    Phone *tail = new Phone;
-    /*     ListPhone()
-        {
-            head = NULL;
-            tail = NULL;
-        } */
-    // Hàm thêm một mục vào danh bạ
-    void addPhone()
+    ListPhone()
     {
+        head = NULL;
+    }
+    // Hàm thêm một mục vào danh bạ
+    void addPhone(int count)
+    {
+        if (count >= 30)
+        {
+            cout << "Can't add more number phone" << endl;
+            return;
+        }
+
         Phone *newPhone = new Phone;
         cout << "Enter full name: ";
-        cin.ignore();
-        cin.getline(newPhone->hoTen, 100);
-
+        // cin.ignore();
+        // cin.getline(newPhone->hoTen, 100);
+        getchar();
+        scanf("%[^\n]s", newPhone->hoTen);
         cout << "Enter number phone: ";
         cin >> newPhone->soDienThoai;
 
         cout << "Enter address: ";
-        cin.ignore();
-        cin.getline(newPhone->diaChi, 100);
+        // cin.ignore();
+        // cin.getline(newPhone->diaChi, 100);
+        getchar();
+        scanf("%[^\n]s", newPhone->diaChi);
+
         if (head == NULL)
         {
-            head->next = NULL;
+            newPhone->next = NULL;
             head = newPhone;
         }
         else
         {
-            tail->next = newPhone;
+            newPhone->next = head;
+            head = newPhone;
         }
-        tail = newPhone;
         cout << "Added successfully.\n";
+        count++;
     }
 
     // Hàm tìm và in thông tin theo số điện thoại
@@ -61,13 +69,13 @@ struct ListPhone
         cin >> numberPhone;
 
         Phone *currentPhone = head;
-        while (currentPhone->soDienThoai == numberPhone)
+        while (currentPhone->soDienThoai != numberPhone)
         {
             currentPhone = currentPhone->next;
         }
-        cout << "Full name: " << currentPhone->hoTen;
-        cout << "Number phone: " << currentPhone->soDienThoai;
-        cout << "Address: " << currentPhone->diaChi;
+        cout << "Full name: " << currentPhone->hoTen << endl;
+        cout << "Number phone: " << currentPhone->soDienThoai << endl;
+        cout << "Address: " << currentPhone->diaChi << endl;
         return;
 
         cout << "Can't find number phone " << numberPhone << endl;
@@ -78,12 +86,16 @@ struct ListPhone
     {
         while (head->next != NULL)
         {
-            Phone *currentPhone = head->next;
+            Phone *currentPhone = head;
             head = currentPhone->next;
-            head->next = currentPhone;
             delete (currentPhone);
+            // head->next = currentPhone->next->next;
         }
         delete (head);
+        if (head == NULL)
+        {
+            cout << "Delete success";
+        }
     }
 };
 typedef struct ListPhone ListPhone;
@@ -105,10 +117,8 @@ int dislayMenu()
 
 int main()
 {
-    ListPhone phone;     // Danh sách danh bạ
-    int countNumber = 0; // Số lượng mục trong danh bạ
-
-    int choise;
+    ListPhone phone; // Danh sách danh bạ
+    int choise, count = 0;
     do
     {
         choise = dislayMenu();
@@ -116,7 +126,8 @@ int main()
         switch (choise)
         {
         case 1:
-            phone.addPhone();
+            phone.addPhone(count);
+            count++;
             break;
         case 2:
             phone.findAndPrint();

@@ -14,4 +14,4 @@
 #exe
 *.exe
 
-test/test.cpp
+test.cpp

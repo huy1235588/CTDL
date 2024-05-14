@@ -15,3 +15,6 @@
 *.exe
 
 test.cpp
+
+# rar file
+*.rar

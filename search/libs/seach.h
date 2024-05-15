@@ -61,7 +61,8 @@ int sentinelLinearSearch(int *a, int n, int *k)
 {
     int last = *(a + (n - 1));
     int i = 0;
-    while (*(a + i) != *k )
+    *(a + (n - 1)) = *k;
+    while (*(a + i) != *k)
     {
         i++;
     }

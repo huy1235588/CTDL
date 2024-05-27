@@ -15,7 +15,6 @@ void intputArray(int a[], int *n)
         fileInput >> a[i];
     }
     fileInput.close();
-    
 }
 
 void printArray(int a[], int n)
@@ -86,3 +85,4 @@ void insertionSort(int a[], int n)
         a[pos] = firstValueUnodered;
     }
 }
+

@@ -245,7 +245,7 @@ int main(int argc, char *argv[])
     {
         fraction[i] = generateFaction(generateRandomNumber(-100, 100), generateRandomNumber(-100, 100));
     }*/
-
+    int a[] = {7, 0, 6, 5, 4, 2, 52, 42, 5, 12, 5, 1};
     // fraction[0] = generateFaction(6, 8);
     // fraction[1] = generateFaction(5, 7);
     // fraction[2] = generateFaction(-2, 5);
@@ -255,16 +255,24 @@ int main(int argc, char *argv[])
     // fraction[1] = generateFaction(6, 8);
     // fraction[2] = generateFaction(6, 8);
     // fraction[3] = generateFaction(6, 8);
-
-    fraction[0] = generateFaction(7, 0);
-    fraction[1] = generateFaction(6, 5);
-    fraction[2] = generateFaction(6, 5);
-    fraction[3] = generateFaction(6, 4);
-
-    for (int i = 0; i < N; i++)
+    int sizeArray = sizeof(a) / sizeof(a[0]);
+    int i, j = 1;
+    for ( i = 0; i < sizeArray; i += 2)
     {
-        printf("Franction %d: ", i);
-        printFractionNotSimple(fraction[i]);
+        fraction[j] = generateFaction(a[i], a[i + 1]);
+        j++;
+    }
+
+    // fraction[0] = generateFaction(7, 0);
+    // fraction[1] = generateFaction(6, 5);
+    // fraction[2] = generateFaction(6, 5);
+    // fraction[3] = generateFaction(6, 4);
+    j =1;
+    for (int i = 0; i < sizeArray; i+=2)
+    {
+        printf("Franction %d: ", j);
+        printFractionNotSimple(fraction[j]);
+        j++;
     }
 
     //  Sum
@@ -286,10 +294,11 @@ int main(int argc, char *argv[])
     // Compare
     printf("Compare: ");
     comparingFraction(fraction);
-
-    for (int i = 0; i < N; i++)
+    j =1;
+    for ( i = 0; i < sizeArray; i+=2)
     {
-        delete fraction[i];
+        delete fraction[j];
+        j++;
     }
 
     delete sum;

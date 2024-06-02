@@ -1,20 +1,23 @@
 #include <iostream>
 #include <fstream>
 
-void intputArray(int a[], int *n)
+int *intputArray(int &n)
 {
+    int *a = nullptr;
     int i;
     std::ifstream fileInput(".//testInput.txt");
     if (fileInput.fail())
     {
         std::cout << "Fail" << std::endl;
     }
-    fileInput >> *n;
-    for (i = 0; i < *n; i++)
+    fileInput >> n;
+    a = new int[n];
+    for (i = 0; i < n; i++)
     {
         fileInput >> *(a + i);
     }
     fileInput.close();
+    return a;
 }
 
 void printArray(int a[], int n)
@@ -197,16 +200,17 @@ void shellSort(int a[], int n)
 void partition(int a[], int low, int high)
 {
     int i, j;
-    int pivot = (low + high) / 2;
+    int pivotIndex = (low + high) / 2;
+    int pivot = *(a + pivotIndex);
     i = low;
     j = high;
     do
     {
-        while (*(a + i) < *(a + pivot) && i < high)
+        while (*(a + i) < pivot && i < high)
         {
             i++;
         }
-        while (*(a + j) > *(a + pivot) && j > low)
+        while (*(a + j) > pivot && j > low)
         {
             j--;
         }

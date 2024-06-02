@@ -65,7 +65,7 @@ int main(int argc, char *argv[])
 {
     int a[] = {23,523,4,123,6,7,5,2,643};
     int n = sizeof(a) / sizeof(*(a + 0));
-    intputArray(a, &n);
+    //intputArray(a, &n);
     printArray(a, n);
     mergeSort(a,n);
     printArray(a,n);

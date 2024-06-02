@@ -12,19 +12,21 @@ int main(int argc, char *argv[])
     int *array5 = intputArray(n);
     int *array6 = intputArray(n);
     int *array7 = intputArray(n);
+    int *array8 = intputArray(n);
     if (array1 != nullptr && array2 != nullptr && array3 != nullptr && array4 != nullptr && array5 != nullptr && array6 != nullptr && array7 != nullptr)
     {
         bubbleSort(array1, n);
         selectionSort(array2, n);
         insertionSort(array3, n);
-        mergeSort(array4, n);
+        interChangeSort(array4, n);
         sharkerSort(array5, n);
         shellSort(array6, n);
         quickSort(array7, n);
+        mergeSort(array8, n);
         // printArray(array, n);
         for (i = 0; i < n; i++)
         {
-            if (*(array1 + i) != *(array7 + i))
+            if (*(array2 + i) != *(array4 + i))
             {
                 check = false;
             }
@@ -38,6 +40,7 @@ int main(int argc, char *argv[])
         delete[] array5;
         delete[] array6;
         delete[] array7;
+        delete[] array8;
     }
     else
     {

@@ -46,7 +46,7 @@ void bubbleSort(int a[], int n)
         swapped = false;
         for (i = 1; i < n; i++)
         {
-            if (*(a + i) < *(a + i - 1))
+            if (*(a + i) < *(a + i - 1)) // if (*(a + i) > *(a + i - 1)) for decrease
             {
                 swap((a + i), (a + i - 1));
                 swapped = true;
@@ -64,7 +64,7 @@ void selectionSort(int a[], int n)
         minIndex = i;
         for (j = i + 1; j < n; j++)
         {
-            if (*(a + j) < *(a + minIndex))
+            if (*(a + j) < *(a + minIndex)) // if (*(a + j) > *(a + minIndex)) for decrease
             {
                 minIndex = j;
             }
@@ -80,7 +80,7 @@ void insertionSort(int a[], int n)
     {
         pos = i;
         posValue = *(a + i);
-        while (pos > 0 && *(a + pos - 1) > posValue)
+        while (pos > 0 && *(a + pos - 1) < posValue) // while (pos > 0 && *(a + pos - 1) < posValue) for decrease
         {
             *(a + pos) = *(a + pos - 1);
             pos--;
@@ -89,6 +89,23 @@ void insertionSort(int a[], int n)
     }
 }
 
+// InterChange Sort
+void interChangeSort(int a[], int n)
+{
+    int i, j;
+    for (i = 0; i < n - 1; i++)
+    {
+        for (j = i + 1; j < n; j++)
+        {
+            if (*(a + i) > *(a + j)) // if (*(a + i) < *(a + j)) for decrease
+            {
+                swap((a + i), (a + j));
+            }
+        }
+    }
+}
+
+// Merge Sort
 void merge(int array[], int left, int middle, int right)
 {
     int i, j, k;
@@ -106,7 +123,7 @@ void merge(int array[], int left, int middle, int right)
     i = 0, j = 0, k = left;
     while (i < leftArraySize && j < rightArraySize)
     {
-        if (*(leftArray + i) <= *(rightArray + j))
+        if (*(leftArray + i) < *(rightArray + j)) // if (*(leftArray + i) > *(rightArray + j)) for decrease
         {
             *(array + k) = *(leftArray + i);
             i++;
@@ -149,6 +166,7 @@ void mergeSort(int array[], int n)
     _mergeSort(array, 0, n - 1);
 }
 
+// Shaker Sort
 void sharkerSort(int a[], int n)
 {
     int i, left, right, k;
@@ -159,7 +177,7 @@ void sharkerSort(int a[], int n)
     {
         for (i = left; i < right; i++)
         {
-            if (*(a + i) > *(a + i + 1))
+            if (*(a + i) < *(a + i + 1)) // if (*(a + i) > *(a + i + 1)) for decrease
             {
                 swap((a + i), (a + i + 1));
                 k = i;
@@ -168,7 +186,7 @@ void sharkerSort(int a[], int n)
         right = k;
         for (i = right; i > left; i--)
         {
-            if (*(a + i) < *(a + i - 1))
+            if (*(a + i) < *(a + i - 1)) // if (*(a + i) > *(a + i - 1)) for decrease
             {
                 swap((a + i), (a + i - 1));
                 k = i;
@@ -178,6 +196,7 @@ void sharkerSort(int a[], int n)
     }
 }
 
+// Shell sort
 void shellSort(int a[], int n)
 {
     int i, h, pos, posValue;
@@ -187,7 +206,7 @@ void shellSort(int a[], int n)
         {
             pos = i;
             posValue = *(a + i);
-            while (pos >= h && *(a + pos - h) > posValue)
+            while (pos >= h && *(a + pos - h) > posValue) // while (pos >= h && *(a + pos - h) < posValue) for decrease
             {
                 *(a + pos) = *(a + pos - h);
                 pos -= h;
@@ -197,6 +216,7 @@ void shellSort(int a[], int n)
     }
 }
 
+// Quick sort
 void partition(int a[], int low, int high)
 {
     int i, j;
@@ -206,11 +226,11 @@ void partition(int a[], int low, int high)
     j = high;
     do
     {
-        while (*(a + i) < pivot && i < high)
+        while (*(a + i) < pivot && i < high) //  while (*(a + i) > pivot && i < high) for decrease
         {
             i++;
         }
-        while (*(a + j) > pivot && j > low)
+        while (*(a + j) > pivot && j > low) // while (*(a + j) < pivot && j > low) for decrease
         {
             j--;
         }

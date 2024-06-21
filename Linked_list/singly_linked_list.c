@@ -320,18 +320,18 @@ static BOOLEAN __swapData(NODE* __this, NODE* __that) {
     return __flag;
 }
 
-static COMPARISON __compareData(DATA this, DATA that) {
+static COMPARISON __compareData(DATA __this, DATA __that) {
     COMPARISON comparison = EQUAL_TO;
-    if (this.value > that.value) {
+    if (__this.value > __that.value) {
         comparison = GREATER_THAN; 
-    } else if (this.value < that.value) {
+    } else if (__this.value < __that.value) {
         comparison = LESS_THAN; 
     }
     return comparison;
 }
 
-static BOOLEAN __equalToData(DATA this, DATA that) {
-    return (this.value == that.value) ? (BOOLEAN) TRUE : (BOOLEAN) FALSE;
+static BOOLEAN __equalToData(DATA __this, DATA __that) {
+    return (__this.value == __that.value) ? (BOOLEAN) TRUE : (BOOLEAN) FALSE;
 }
 
 void sort(LIST* __list, ORDER __order) {    // Selection Sort

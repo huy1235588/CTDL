@@ -18,3 +18,5 @@ test.cpp
 
 # rar file
 *.rar
+
+html/*

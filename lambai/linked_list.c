@@ -15,6 +15,17 @@ NODE *createNode(DATA *__data)
     return __node;
 }
 
+DATA *generateData(int __key, int __value)
+{
+    DATA *__data = (DATA *)malloc(sizeof(DATA));
+    if (__data != NULL)
+    {
+        __data->key = __key;
+        __data->value = __value;
+    }
+    return __data;
+}
+
 //*************************************************************
 // Check a list
 //*************************************************************
@@ -180,7 +191,7 @@ static void __printNode(NODE *__node)
 {
     if (__node != NULL)
     {
-        printf("( %p :: %d :: %d )", // ( node's address :: key :: value )
+        printf("( %p :: %d :: %d ::)", // ( node's address :: key :: value )
                __node,
                __node->data->key,
                __node->data->value);
@@ -546,7 +557,85 @@ void sortByMerge(LIST *__list, ORDER __order)
     __list->head = mergeSort(__list->head, __order);
 }
 
-double measureSortTime(void (*sortFunction)(LIST *, ORDER), LIST *__list, ORDER __order) {
+static NODE *insertionSort(NODE *__list, ORDER __order)
+{
+    if (__list == NULL || __list->next == NULL)
+    {
+        return __list;
+    }
+    NODE *dummy = createNode(generateData(NULL, NULL));
+    NODE *__current = __list;
+    while (__current != NULL)
+    {
+        NODE *prev = dummy;
+        NODE *next = __current->next;
+        while (prev->next != NULL && __compareData(*(prev->next->data), *(__current->data)) == ((__order == ASC) ? LESS_THAN : GREATER_THAN))
+        {
+            prev = prev->next;
+        }
+        __current->next = prev->next;
+        prev->next = __current;
+        __current = next;
+    }
+    return dummy->next;
+}
+
+void sortByInsertion(LIST *__list, ORDER __order)
+{
+    __list->head = insertionSort(__list->head, __order);
+}
+
+void sortByShell(LIST *__list, ORDER __order)
+{
+    if (__list->head != NULL)
+    {
+        int __step = 0;
+        int lenght = 0;
+        NODE *__prev = __list->head;
+        while (__prev)
+        {
+            lenght++;
+            __prev = __prev->next;
+        }
+        while (2 * (3 * __step + 1) <= lenght)
+            __step = 3 * __step + 1;
+        for (__step; __step > 0; __step /= 3)
+        {
+            for (int i = __step; i > 0; i--)
+            {
+                for (int j = __step - i; j < lenght; j += __step)
+                {
+                    __prev = __list->head;
+                    int k;
+                    for (k = 0; k < j; k++)
+                        __prev = __prev->next;
+                    NODE *__current = __prev;
+                    int temp = k + __step;
+                    while (__current)
+                    {
+                        for (k; k < temp;)
+                            if (__current)
+                            {
+                                k++;
+                                __current = __current->next;
+                            }
+                            else
+                                break;
+                        if (__current)
+                            if (__compareData(*(__current->data), *(__prev->data)) == ((__order == ASC) ? LESS_THAN : GREATER_THAN))
+                            {
+                                __swapData(__current, __prev);
+                            }
+                        temp += __step;
+                    }
+                }
+            }
+        }
+    }
+}
+
+double measureSortTime(void (*sortFunction)(LIST *, ORDER), LIST *__list, ORDER __order)
+{
     clock_t start, end;
     double cpu_time_used;
 
@@ -554,6 +643,6 @@ double measureSortTime(void (*sortFunction)(LIST *, ORDER), LIST *__list, ORDER 
     sortFunction(__list, __order);
     end = clock();
 
-    cpu_time_used = ((double) (end - start)) / CLOCKS_PER_SEC;
+    cpu_time_used = ((double)(end - start)) / CLOCKS_PER_SEC;
     return cpu_time_used;
 }

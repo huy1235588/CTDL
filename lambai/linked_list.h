@@ -19,6 +19,7 @@ typedef struct SinglyLinkedList
 // function prototype
 //*************************************************************
 NODE *createNode(DATA *__data);
+DATA *generateData(int __key, int __value);
 BOOLEAN isInitialized(LIST *__list);
 BOOLEAN isEmptyList(LIST *__list);
 int getSize(LIST *__list);
@@ -41,6 +42,8 @@ void releaseWholeList(LIST *__list);
 void sort(LIST *__list, ORDER __order);
 void sortByQS(LIST *__list, ORDER __order);
 void sortByMerge(LIST *__list, ORDER __order);
+void sortByInsertion(LIST *__list, ORDER __order);
+void sortByShell(LIST *__list, ORDER __order);
 double measureSortTime(void (*sortFunction)(LIST *, ORDER), LIST *__list, ORDER __order);
 
 #endif

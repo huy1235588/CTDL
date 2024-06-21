@@ -1,8 +1,8 @@
 # Command Line: make
 CC=gcc
 CXX=g++
-TARGET=test# Program name
-OBJS=test.o linked_list.c
+TARGET=main# Program name
+OBJS=main.o queue.c
 DEPS=linked_list.h
 # $@	All content to left of the the colon
 # $^	All content to right of the the colon

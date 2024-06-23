@@ -19,7 +19,7 @@ static COMPARISON __compareKey(TNODE *__this, TNODE *__that)
     return comparison;
 }
 
-TNODE *createNode(DATA *__data)
+TNODE *createTreeNode(DATA *__data)
 {
     TNODE *__node;
     __node = (TNODE *)malloc(sizeof(TNODE));
@@ -32,34 +32,44 @@ TNODE *createNode(DATA *__data)
     return __node;
 }
 
-TNODE *insert(TREE __root, TNODE *__node)
+TNODE *insert(TREE *__root, TNODE *__node)
 {
-    if (__root == NULL)
+    if (*__root == NULL)
     {
-        __root = __node;
+        *__root = __node;
     }
     else
     {
-        if (__compareKey(__root, __node) == GREATER_THAN)
+        if (__compareKey(*__root, __node) == GREATER_THAN)
         {
-            return insert(__root->left, __node);
+            return insert(&(*__root)->left, __node);
         }
-        else if (__compareKey(__root, __node) == LESS_THAN)
+        else if (__compareKey(*__root, __node) == LESS_THAN)
         {
-            return insert(__root->right, __node);
+            return insert(&(*__root)->right, __node);
         }
     }
-    return __root;
+    return *__root;
 }
 
-TNODE *traverse(TREE __root)
+void traverse(TREE __root)
 {
     if (__root != NULL)
     {
         // PreOrder: N L R
-        printf("%d\n", __root->data->key);
+        printf("%d :: %d\n", __root->data->key, __root->data->value);
         traverse(__root->left);
         traverse(__root->right);
+
+        // In-order: L N R
+        // traverse(__root->left);
+        // printf("%d :: %d\n", __root->data->key, __root->data->value);
+        // traverse(__root->right);
+
+        // Post-order: L R N
+        //  traverse(__root->left);
+        // traverse(__root->right);
+        // printf("%d :: %d\n", __root->data->key, __root->data->value);
     }
 }
 
@@ -82,6 +92,7 @@ TNODE *search(TREE __root, int __key)
     }
     return NULL;
 }
+
 TNODE *minTreeNode(TREE __root)
 {
     if (__root->left == NULL)
@@ -145,4 +156,16 @@ TNODE *remove(TREE __root, int __key)
 
 TNODE *getNode(TREE __root)
 {
+}
+
+void freeTree(TREE *__root)
+{
+    if (*__root != NULL)
+    {
+        freeTree(&(*__root)->left);
+        freeTree(&(*__root)->right);
+        free(*__root);
+        free((*__root)->data);
+        *__root = NULL;
+    }
 }

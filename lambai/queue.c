@@ -48,14 +48,14 @@ DATA *dequeue(QUEUE *__queue)
         }
         else
         {
-            ELEMENT *__element = __queue->head;
-            while (__element->next != __queue->tail)
+            ELEMENT *__current = __queue->head;
+            while (__current->next != __queue->tail)
             {
-                __element = __element->next;
+                __current = __current->next;
             }
             __data = __queue->tail->data;
             free(__queue->tail);
-            __queue->tail = __element;
+            __queue->tail = __current;
             __queue->tail->next = NULL;
         }
     }
@@ -81,6 +81,7 @@ void freeQueue(QUEUE *__queue)
         {
             __temp = __queue->head;
             __queue->head = __queue->head->next;
+            free(__temp->data);
             free(__temp);
         }
     }

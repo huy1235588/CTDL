@@ -15,17 +15,6 @@ NODE *createNode(DATA *__data)
     return __node;
 }
 
-DATA *generateData(int __key, int __value)
-{
-    DATA *__data = (DATA *)malloc(sizeof(DATA));
-    if (__data != NULL)
-    {
-        __data->key = __key;
-        __data->value = __value;
-    }
-    return __data;
-}
-
 //*************************************************************
 // Check a list
 //*************************************************************
@@ -412,6 +401,7 @@ void releaseWholeList(LIST *__list)
         {
             __temp = __list->head;
             __list->head = __list->head->next;
+            free(__temp->data);
             free(__temp);
         }
     }

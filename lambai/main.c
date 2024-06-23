@@ -7,7 +7,7 @@
 #include "linked_list.h"
 #include "stack.h"
 #include "queue.h"
-
+#include "binary_search_tree.h"
 //*************************************************************
 //*************************************************************
 DATA *generateData(int __key, int __value)
@@ -84,19 +84,19 @@ int main(int argc, char *argv[])
     // releaseWholeList(list);
     // releaseWholeList(list2);
 
-    // STACK stack_null = (STACK){NULL};
-    // STACK *stack = &stack_null;
-
     //*************************************************************
     // STACK
     //*************************************************************
+    // STACK stack_null = (STACK){NULL};
+    // STACK *stack = &stack_null;
+    // // STACK* stack = &((STACK) { NULL });
 
-    // ITEM *item1 = createItem(generateData(1, 10));
-    // ITEM *item2 = createItem(generateData(2, 23));
-    // ITEM *item3 = createItem(generateData(3, 41));
-    // ITEM *item4 = createItem(generateData(4, 4151));
-    // ITEM *item5 = createItem(generateData(5, 2));
-    // ITEM *item6 = createItem(generateData(6, 5));
+    // ITEM *item1 = createItem(generateData(1, 11));
+    // ITEM *item2 = createItem(generateData(2, 95));
+    // ITEM *item3 = createItem(generateData(3, 24));
+    // ITEM *item4 = createItem(generateData(4, 47));
+    // ITEM *item5 = createItem(generateData(5, 63));
+    // ITEM *item6 = createItem(generateData(6, 87));
 
     // push(stack, item1);
     // push(stack, item2);
@@ -105,17 +105,26 @@ int main(int argc, char *argv[])
     // push(stack, item5);
     // push(stack, item6);
 
+    // printf("\n\nStack:");
     // printStack(stack);
     // printf("\n\n");
+
     // pop(stack);
     // printStack(stack);
 
-    // top(stack);
+    // pop(stack);
+    // pop(stack);
+    // pop(stack);
+    // pop(stack);
     // printf("\n\n");
     // printStack(stack);
 
+    // pop(stack);
+    // printf("\n");
+    // printStack(stack);
+
     // freeStack(stack);
-    // if (isEmptyStack)
+    // if (isEmptyStack(stack))
     // {
     //     printf("Release Stack succeces");
     // }
@@ -124,46 +133,83 @@ int main(int argc, char *argv[])
     // QUEUE
     //*************************************************************
 
-    QUEUE queue_null = (QUEUE){NULL};
-    QUEUE *queue = &queue_null;
+    // QUEUE queue_null = (QUEUE){NULL};
+    // QUEUE *queue = &queue_null;
 
-    ELEMENT *element1 = createElement(generateData(1, 10));
-    ELEMENT *element2 = createElement(generateData(2, 23));
-    ELEMENT *element3 = createElement(generateData(3, 41));
-    ELEMENT *element4 = createElement(generateData(4, 4151));
-    ELEMENT *element5 = createElement(generateData(5, 2));
-    ELEMENT *element6 = createElement(generateData(6, 5));
+    // ELEMENT *element1 = createElement(generateData(1, 10));
+    // ELEMENT *element2 = createElement(generateData(2, 23));
+    // ELEMENT *element3 = createElement(generateData(3, 41));
+    // ELEMENT *element4 = createElement(generateData(4, 4151));
+    // ELEMENT *element5 = createElement(generateData(5, 2));
+    // ELEMENT *element6 = createElement(generateData(6, 5));
 
-    enqueue(queue, element1);
-    enqueue(queue, element2);
-    enqueue(queue, element3);
-    enqueue(queue, element4);
-    enqueue(queue, element5);
-    enqueue(queue, element6);
+    // enqueue(queue, element1);
+    // enqueue(queue, element2);
+    // enqueue(queue, element3);
+    // enqueue(queue, element4);
+    // enqueue(queue, element5);
+    // enqueue(queue, element6);
 
-    printQueue(queue);
+    // printf("\n\nQueue:");
+    // printQueue(queue);
+    // printf("\n\n");
+
+    // dequeue(queue);
+    // printQueue(queue);
+
+    // dequeue(queue);
+    // dequeue(queue);
+    // dequeue(queue);
+    // dequeue(queue);
+    // printf("\n\n");
+    // printQueue(queue);
+
+    // dequeue(queue);
+    // printf("\n");
+    // printQueue(queue);
+
+    // freeQueue(queue);
+    // if (isEmptyQueue)
+    // {
+    //     printf("Release Queue succeces");
+    // }
+
+    //*************************************************************
+    // BINARY SEARCH TREE
+    //*************************************************************
+    TREE root = NULL;
+
+    TNODE *TreeNode1 = createTreeNode(generateData(1, 10));
+    TNODE *TreeNode2 = createTreeNode(generateData(2, 23));
+    TNODE *TreeNode3 = createTreeNode(generateData(3, 41));
+    TNODE *TreeNode4 = createTreeNode(generateData(4, 4151));
+    TNODE *TreeNode5 = createTreeNode(generateData(5, 2));
+    TNODE *TreeNode6 = createTreeNode(generateData(6, 5));
+
+    // printf("\nroot outside adress: %p\t root: %p\n", &root, root);
+    // printf("\nroot outside: %p\t root right: %p\n", &root, root->right);
+
+    insert(&root, TreeNode6);
+    insert(&root, TreeNode3);
+    insert(&root, TreeNode1);
+    insert(&root, TreeNode5);
+    insert(&root, TreeNode4);
+    insert(&root, TreeNode2);
+
+    printf("\n\nBinary Tree:\n");
+    traverse((root));
     printf("\n\n");
 
-    dequeue(queue);
-    printQueue(queue);
+    TNODE *key5 = search(root, 5);
+    printf("Key 5: %d :: %d\n", key5->data->key, key5->data->value);
 
-    dequeue(queue);
-    dequeue(queue);
-    dequeue(queue);
-    dequeue(queue);
-    printf("\n\n");
-    printQueue(queue);
+    TNODE *min_Tree_Node = minTreeNode(root);
+    printf("min_Tree_Node: %d :: %d\n", min_Tree_Node->data->key, min_Tree_Node->data->value);
 
-
-    dequeue(queue);
-    printf("\n\n");
-    printQueue(queue);
-
-
-    freeQueue(queue);
-    if (isEmptyQueue)
+    freeTree(&root);
+    if (root == NULL)
     {
-        printf("Release Queue succeces");
+        printf("Release Tree succeces");
     }
 
     return 0;

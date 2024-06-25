@@ -152,6 +152,30 @@ int getPositionByKey(LIST *__list, int __key)
     return __position;
 }
 
+int getPositionByValue(LIST *__list, int __value)
+{
+    int __position = -1; // result
+    if (isInitialized(__list))
+    {
+        if (__list->head != NULL)
+        {
+            NODE *__current = __list->head;
+            int __current_position = 0;
+            while (__current != NULL)
+            {
+                if (__current->data->value == __value)
+                {
+                    __position = __current_position;
+                    break;
+                }
+                __current_position++;
+                __current = __current->next;
+            }
+        }
+    }
+    return __position;
+}
+
 NODE *getBeforeByPosition(LIST *__list, int __position)
 {
     NODE *__prev = NULL;
@@ -176,7 +200,7 @@ NODE *getBeforeByPosition(LIST *__list, int __position)
 //*************************************************************
 // Print all data of the whole list
 //*************************************************************
-static void __printNode(NODE *__node)
+void printNode(NODE *__node)
 {
     if (__node != NULL)
     {
@@ -195,7 +219,7 @@ void printList(LIST *__list)
         while (__current != NULL)
         {
             printf("\n");
-            __printNode(__current);
+            printNode(__current);
             __current = __current->next;
         }
     }
@@ -442,7 +466,7 @@ static BOOLEAN __equalToData(DATA __this, DATA __that)
     return (__this.value == __that.value) ? (BOOLEAN)TRUE : (BOOLEAN)FALSE;
 }
 
-void sort(LIST *__list, ORDER __order)
+void sortinterChange(LIST *__list, ORDER __order)
 { // Selection Sort
     NODE *__min;
     NODE *__current_ext = __list->head;

@@ -1,33 +1,19 @@
-#include <iostream>
-#include <fstream>
-
-int *intputArray(int &n)
-{
-    int *a = nullptr;
-    int i;
-    std::ifstream fileInput(".//testInput.txt");
-    if (fileInput.fail())
-    {
-        std::cout << "Fail" << std::endl;
-    }
-    fileInput >> n;
-    a = new int[n];
-    for (i = 0; i < n; i++)
-    {
-        fileInput >> *(a + i);
-    }
-    fileInput.close();
-    return a;
-}
+#include "utils.h"
 
 void printArray(int a[], int n)
 {
     int i;
     for (i = 0; i < n; i++)
     {
-        std::cout << *(a + i) << " ";
+        printf("%d ", *(a + i));
     }
-    std::cout << std::endl;
+    printf("\n");
+}
+
+void insertArray(int a[], int n)
+{
+    int i;
+    scanf("%d ", (a + n));
 }
 
 void swap(int *a, int *b)
@@ -40,16 +26,16 @@ void swap(int *a, int *b)
 void bubbleSort(int a[], int n)
 {
     int i;
-    bool swapped;
+    BOOLEAN swapped;
     do
     {
-        swapped = false;
+        swapped = FALSE;
         for (i = 1; i < n; i++)
         {
             if (*(a + i) < *(a + i - 1)) // if (*(a + i) > *(a + i - 1)) for decrease
             {
                 swap((a + i), (a + i - 1));
-                swapped = true;
+                swapped = TRUE;
             }
         }
 

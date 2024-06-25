@@ -14,11 +14,12 @@ typedef TNODE *TREE;
 TNODE *createTreeNode(DATA *__data);
 int getSize(TREE __root);
 TNODE *getNode(TREE __root);
-TNODE *insert(TREE *__root, TNODE *__node);
+TNODE *insertTreeNode(TREE *__root, TNODE *__node);
 void traverse(TREE __root); // Tree Traversal: PreOrder, InOrder,
-TNODE *search(TREE __root, int __key);
+TNODE *searchTreeNode(TREE __root, int __key);
 TNODE *minTreeNode(TREE __root);
-TNODE *remove(TREE __root, int __key);
+TNODE *maxTreeNode(TREE __root);
+TNODE *removeTreeNode(TREE __root, int __key);
 void freeTree(TREE *__root);
 
 #endif

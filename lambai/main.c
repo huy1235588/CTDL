@@ -3,11 +3,11 @@
 // Author: Ha
 //*************************************************************
 
-#include "utils.h"
-#include "linked_list.h"
-#include "stack.h"
-#include "queue.h"
-#include "binary_search_tree.h"
+#include "libs/utils.h"
+#include "libs/linked_list.h"
+#include "libs/stack.h"
+#include "libs/queue.h"
+#include "libs/binary_search_tree.h"
 //*************************************************************
 //*************************************************************
 DATA *generateData(int __key, int __value)
@@ -189,22 +189,30 @@ int main(int argc, char *argv[])
     // printf("\nroot outside adress: %p\t root: %p\n", &root, root);
     // printf("\nroot outside: %p\t root right: %p\n", &root, root->right);
 
-    insert(&root, TreeNode6);
-    insert(&root, TreeNode3);
-    insert(&root, TreeNode1);
-    insert(&root, TreeNode5);
-    insert(&root, TreeNode4);
-    insert(&root, TreeNode2);
+    insertTreeNode(&root, TreeNode6);
+    insertTreeNode(&root, TreeNode3);
+    insertTreeNode(&root, TreeNode1);
+    insertTreeNode(&root, TreeNode5);
+    insertTreeNode(&root, TreeNode4);
+    insertTreeNode(&root, TreeNode2);
 
-    printf("\n\nBinary Tree:\n");
+    printf("\nBinary Tree:\n\n");
     traverse((root));
-    printf("\n\n");
+    printf("\n");
 
-    TNODE *key5 = search(root, 5);
-    printf("Key 5: %d :: %d\n", key5->data->key, key5->data->value);
+    // TNODE *key5 = searchTreeNode(root, 5);
+    // printf("Key 5: %d :: %d\n", key5->data->key, key5->data->value);
 
-    TNODE *min_Tree_Node = minTreeNode(root);
-    printf("min_Tree_Node: %d :: %d\n", min_Tree_Node->data->key, min_Tree_Node->data->value);
+    // TNODE *min_Tree_Node = minTreeNode(root);
+    // printf("min_Tree_Node: %d :: %d\n", min_Tree_Node->data->key, min_Tree_Node->data->value);
+    // printf("\n\n");
+
+    // TNODE *max_Tree_Node = maxTreeNode(root);
+    // printf("max_Tree_Node: %d :: %d\n", max_Tree_Node->data->key, max_Tree_Node->data->value);
+    // printf("\n\n");
+
+    removeTreeNode(root, 3);
+    traverse((root));
 
     freeTree(&root);
     if (root == NULL)

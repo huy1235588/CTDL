@@ -18,22 +18,24 @@ typedef enum Order {
     ASC = 1
 } ORDER;
 
-typedef struct Data {
-    int key;
-    int number;
-    char text[TEXT_MAX_LENGTH];
-} DATA;
+typedef struct Student {
+    int id;
+    char name[50];
+    float mathScore;
+    float literatureScore;
+    float averageScore;
+} STUDENT;
 
 
 void swapInteger(int* this, int* that);
 void swapDouble(double* this, double* that);
 void swapString(char** this, char** that);
 void swapCharacterArray(char* this, char* that);
-void swapData(DATA* this, DATA* that);
+void swapData(STUDENT* this, STUDENT* that);
 
-int compareDataByKey(DATA this, DATA that);
-int compareDataByValue(DATA this, DATA that);
-
+int compareDataByKey(STUDENT this, STUDENT that);
+int compareDataByValue(STUDENT this, STUDENT that);
+int compareDataByAvg(STUDENT this, STUDENT that);
 int generateRandomInteger(int lower_bound, int upper_bound);
 
 #endif

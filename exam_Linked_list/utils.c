@@ -26,24 +26,34 @@ void swapCharacterArray(char* this, char* that) {    // swap data
     free(temp); 
 }
 
-void swapData(DATA* this, DATA* that) {
-    DATA temp = *this;
+void swapData(STUDENT* this, STUDENT* that) {
+    STUDENT temp = *this;
     *this = *that;
     *that = temp;
 }
 
-int compareDataByKey(DATA this, DATA that) {
+int compareDataByKey(STUDENT this, STUDENT that) {
     int comparsion = 0;
-    if (this.key > that.key) {
+    if (this.id > that.id) {
         comparsion = 1;
-    } else if (this.key < that.key) {
+    } else if (this.id < that.id) {
         comparsion = -1;
     }
     return comparsion;
 }
 
-int compareDataByValue(DATA this, DATA that) {
-    return strcmp(this.text, that.text);
+int compareDataByAvg(STUDENT this, STUDENT that) {
+    int comparsion = 0;
+    if (this.averageScore > that.averageScore) {
+        comparsion = 1;
+    } else if (this.averageScore < that.averageScore) {
+        comparsion = -1;
+    }
+    return comparsion;
+}
+
+int compareDataByValue(STUDENT this, STUDENT that) {
+    return strcmp(this.name, that.name);
 }
 
 int generateRandomInteger(int lower_bound, int upper_bound){

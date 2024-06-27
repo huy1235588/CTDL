@@ -4,7 +4,7 @@
 #include "utils.h"
 
 typedef struct NodeOfSinglyLinkedList {
-    struct Data data;
+    struct Student student;
     struct NodeOfSinglyLinkedList* next;
 } SLLNODE;
 
@@ -16,8 +16,8 @@ typedef struct SinglyLinkedList {
 // function prototype
 //*************************************************************
 void demonstrate_singly_linked_lists(); // demo function
-SLLNODE* createNodeFromWholeData(DATA __data);
-SLLNODE* createNodeFromDataDetails(int __key, int __number, char* __text);
+SLLNODE* createNodeFromWholeData(STUDENT __data);
+SLLNODE *createNodeFromDataDetails(int __id, float __mathScore, float __literatureScore, char *__name);
 
 SLLNODE* getNode(SLLIST* __list, int __position);
 SLLNODE* getHead(SLLIST* __list);
@@ -38,5 +38,8 @@ void deleteTail(SLLIST* __list);
 void deleteAtPosition(SLLIST* __list, int __position);
 
 void sortInAscending(SLLIST* __list);
+
+void cau4(SLLIST *__list);
+void cau6(SLLIST *__list);
 
 #endif

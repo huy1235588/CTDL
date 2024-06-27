@@ -58,8 +58,13 @@ NODE *getNode(LIST *__list, int __position)
         {
             __node = __list->head;
             int __current_position = 0;
-            while (__node != NULL || __current_position == __position)
+            while (__node != NULL )
             {
+                if (__current_position != __position)
+                {
+                    return __node;
+                }
+
                 __current_position++;
                 __node = __node->next;
             }
@@ -139,7 +144,7 @@ int getPositionByKey(LIST *__list, int __key)
             int __current_position = 0;
             while (__current != NULL)
             {
-                if (__current->data->key != __key)
+                if (__current->data->key == __key)
                 {
                     __position = __current_position;
                     break;
@@ -305,31 +310,28 @@ NODE *addAtPosition(LIST *__list, int __position, NODE *__node)
 {
     if (isInitialized(__list) && __position >= 0 && __node != NULL)
     {
-        if (__list->head == NULL)
+        if (__list->head == NULL || __position == 0)
         {
+            __node->next = __list->head;
             __list->head = __node;
         }
         else
         {
             // Find Previous Node
-            int __index = -1;
             NODE *__current = __list->head;
             int __current_position = 0;
-            while (__current != NULL)
+
+            while (__current != NULL && __current_position < __position - 1)
             {
-                if (__current_position == __position)
-                {
-                    __index = __current_position;
-                    break;
-                }
                 __current_position++;
                 __current = __current->next;
             }
             // Check Found Previous Node
-            if (__index != __position)
-            { // Not Found!
+            if (__current == NULL)
+            {
                 return NULL;
             }
+
             __node->next = __current->next;
             __current->next = __node;
         }

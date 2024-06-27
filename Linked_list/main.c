@@ -66,12 +66,17 @@ int main(int argc, char *argv[])
     addAtHead(list, n9);  // 3, 2, 1, 6, 4, 5
     addAtHead(list, n10); // 3, 2, 1, 6, 4, 5
 
+    // printList(list);
+    // printf("\n");
+    // sortByQS(list, ASC);
+    // printf("\n");
+    // printList(list);
+    // printf("\n\n");
+
     printList(list);
-    printf("\n");
-    sortByQS(list, ASC);
-    printf("\n");
-    printList(list);
-    printf("\n\n");
+    printf("\nhehe\n\n");
+    NODE *hehe = getNode(list, 0);
+    __printNode(hehe);
 
     // STACK* stack = &((STACK) { NULL });
 

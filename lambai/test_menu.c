@@ -15,7 +15,7 @@ DATA *generateData(int __key, int __value)
 
 void printMenu()
 {
-    printf("\n\n**Welcome to Ha** \t\t\n");
+    printf("\n\n==========Welcome to Ha==========\n");
     printf("~Menu~\t\t\n");
 
     printf(" (1) Print \n");
@@ -23,22 +23,24 @@ void printMenu()
     printf(" (3) Search \n");
     printf(" (4) Sort \n");
     printf(" (0) Exit \n");
+    printf("==================================\n");
 }
 
 void printMenuInsert()
 {
-    printf("~Menu Insert~\t\t\n");
+    printf("\n===========Menu Inserts===========\n");
 
     printf(" (1) ADD at Head \n");
     printf(" (2) ADD at Tail \n");
     printf(" (3) ADD after node \n");
     printf(" (4) Add at Position \n");
     printf(" (0) Exit \n");
+    printf("==================================\n");
 }
 
 void printMenuSort()
 {
-    printf("~Menu Sort~\t\t\n");
+    printf("\n============Menu Sorts============\n");
 
     printf(" (1) Interchange Sort \n");
     printf(" (2) QuickSort \n");
@@ -46,25 +48,28 @@ void printMenuSort()
     printf(" (4) Insertion Sort \n");
     printf(" (5) Shell Sort \n");
     printf(" (0) Exit \n");
+    printf("==================================\n");
 }
 
 void printMenuSortOrder()
 {
+    printf("\n==================================\n");
     printf(" (1) Sort in Ascending order \n");
     printf(" (2) Sort in Descending order \n");
+    printf("==================================\n");
 }
 
 int getUserChoice()
 {
     int choice;
-    printf("Enter your choice: ");
+    printf("Enter your choice:");
     scanf("%d", &choice);
     return choice;
 }
 
 int main()
 {
-    int choice, choiceInsert, choiseSort, choiseSortOrder, value, pos;
+    int choice, choiceInsert, choiseSort, choiseSortOrder, value, pos, keyOfNote;
     int key = 1;
     ORDER order;
 
@@ -81,8 +86,18 @@ int main()
         switch (choice)
         {
         case 1:
-            printf("\nList: \n");
-            printList(list);
+            if (isEmptyList(list))
+            {
+                printf("\n==================================\n");
+                printf("List is empty");
+                printf("\n==================================\n");
+            }
+            else
+            {
+                printf("\n==============Lists==============");
+                printList(list);
+                printf("\n==================================\n");
+            }
             break;
 
         case 2:
@@ -104,19 +119,35 @@ int main()
                 break;
 
             case 3:
+                printf("\n==============Lists==============");
                 printList(list);
-                printf("Enter value of node want to add after: ");
-                scanf("%d", &value);
-                nodeTemp = getNode(list, getPositionByValue(list, value));
-                addAfter(list, nodeTemp, node);
-                key++;
+                printf("\n==================================\n");
+                
+                printf("\nEnter key of node want to add after: ");
+                scanf("%d", &keyOfNote);
+                nodeTemp = getNode(list, getPositionByKey(list, keyOfNote));
+                if (nodeTemp == NULL)
+                {
+                    printf("Not found\n");
+                }
+                else
+                {
+                    addAfter(list, nodeTemp, node);
+                    key++;
+                }
                 break;
 
             case 4:
-                printf("Enter position want to add: ");
+                printf("\nEnter position want to add: ");
                 scanf("%d", &pos);
-                addAtPosition(list, pos, node);
-                key++;
+                if (addAtPosition(list, pos, node) != NULL)
+                {
+                    key++;
+                }
+                else
+                {
+                    printf("\nFailed to add node at the specified position.\n");
+                }
                 break;
 
             default:
@@ -144,8 +175,15 @@ int main()
         case 4:
             printMenuSort();
             choiseSort = getUserChoice();
+            if (choiseSort == 0)
+            {
+                break;
+            }
+
             printMenuSortOrder();
-            if (getUserChoice() == 1)
+            choiseSortOrder = getUserChoice();
+
+            if (choiseSortOrder == 1)
             {
                 order = ASC;
             }
